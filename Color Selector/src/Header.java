@@ -6,17 +6,20 @@ import java.awt.*; //For graphics
 public class Header extends JPanel{
     private BufferedImage mImage;
     private Subheader sub;
+    private JLabel label;
 
     public Header(){
         setLayout(new BorderLayout());
+        setPreferredSize(new Dimension(getWidth(), 65));
+
         sub = new Subheader();
         add(sub,BorderLayout.SOUTH);
         
-        JLabel label = new JLabel("Test", JLabel.CENTER);
+        label = new JLabel("Default Color Matrix", JLabel.CENTER);
         label.setFont(new Font("Karla", Font.PLAIN, 30));
         label.setForeground(Color.WHITE);
         add(label);
-     }
+    }
 
      @Override
     public void paintComponent(Graphics g){ 
@@ -32,9 +35,10 @@ public class Header extends JPanel{
         g.fillRect(0, 0, getWidth(), getHeight());
     }
 
-    public void update(CustomColor c){
-        sub.update(c);
-        this.repaint();
+    public void update(CustomColor c, String labelText){
+        sub.refresh(c);
+        if(labelText != null){
+            label.setText(labelText);
+        }
     }
-    
 }

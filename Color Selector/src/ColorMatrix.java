@@ -2,41 +2,38 @@ import java.awt.*; //For graphics
 
 public class ColorMatrix {
     
-    public int resolution;
+    public int resolution = 10;
     private CustomColor[][] matrix;
 
-    private Color topLeft = new Color(255, 0, 0);
-    private Color topRight = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-    private Color bottomLeft = new Color(0.0f, 0.0f, 0.0f, 1.0f);
-    private Color bottomRight = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+    public CustomColor topLeft;
+    public CustomColor topRight;
+    public CustomColor bottomLeft;
+    public CustomColor bottomRight;
 
-    public ColorMatrix(int defaultResolution){
-        resolution = defaultResolution;
+    public ColorMatrix(){
         matrix = new CustomColor[resolution][resolution];
         randomInterplolation();
     }
     
     public void generateColors(){
+        Color tl = topLeft.toColor();
+        Color tr = topRight.toColor();
+        Color bl = bottomLeft.toColor();
+        Color br = bottomRight.toColor();
+
         for(int x = 0; x < resolution; x++){
             for(int y = 0; y < resolution; y++){
-                matrix[x][y] = new CustomColor(bilinearInterpolateColor(topLeft, topRight, bottomLeft, bottomRight, (float) x / (float) resolution, (float) y / (float) resolution));
+                matrix[x][y] = new CustomColor(
+                    bilinearInterpolateColor(tl, tr, bl, br, (float) x / (float) resolution, (float) y / (float) resolution));
             }
         }
     }
 
     public void randomInterplolation(){
-        CustomColor c = new CustomColor();
-        topLeft = c.toColor();
-
-        c = new CustomColor();
-        topRight = c.toColor();
-
-        c = new CustomColor();
-        bottomLeft = c.toColor();
-
-        c = new CustomColor();
-        bottomRight = c.toColor();
-        
+        topLeft = new CustomColor();
+        topRight = new CustomColor();
+        bottomLeft = new CustomColor();
+        bottomRight = new CustomColor();
         generateColors();
     }
 
@@ -95,44 +92,10 @@ public class ColorMatrix {
         return new Color(red, green, blue, alpha);        
     }
 
-    public void setRed(String newValue){
-
-        try{
-            int value = Integer.parseInt(newValue);
-            if(value >= 0 && value < 256){
-                //red = value;
-            }
-        }
-        finally{
-            //System.out.println("Error: Please print out valid number!");
-        }
-    }
-
-    public void setGreen(String newValue){
-        try{
-            int value = Integer.parseInt(newValue);
-            if(value >= 0 && value < 256){
-                //green = value;
-            }
-        }
-        finally{
-
-        }
-    }
-
-    public void setBlue(String newValue){
-        try{
-            int value = Integer.parseInt(newValue);
-            if(value >= 0 && value < 256){
-                //blue = value;
-            }
-        }
-        finally{
-            //System.out.println("Error: Please print out valid number!");
-        }
-    }
-
 	public CustomColor colorAt(int x, int y) {
+        if(x < 0 || y < 0 || x >= resolution || y >= resolution){
+            return null;
+        }
 		return matrix[x][y];
 	}
 
@@ -146,5 +109,13 @@ public class ColorMatrix {
         finally{ }
         matrix = new CustomColor[resolution][resolution];
         generateColors();
+    }
+
+    public String generateID(){
+        return topLeft.hex + topRight.hex + bottomLeft.hex + bottomRight.hex;
+    }
+
+    public CustomColor[][] getMatrix(){
+        return matrix;
     }
 }

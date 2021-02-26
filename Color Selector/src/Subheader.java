@@ -71,6 +71,8 @@ public class Subheader extends JPanel{
         lightness.setFont(new Font("Karla", Font.PLAIN, 15));
         lightness.setForeground(new Color(204, 57, 202));
         add(lightness);
+
+        refresh(null);
     }
 
      @Override
@@ -87,15 +89,28 @@ public class Subheader extends JPanel{
         g.fillRect(0, 0, getWidth(), getHeight());
     }
 
-    public void update(CustomColor c){
-        red.setText(""+c.red);
-        green.setText(""+c.green);
-        blue.setText(""+c.blue);
+    public void refresh(CustomColor c){
+        if(c != null){
+            red.setText(""+c.red);
+            green.setText(""+c.green);
+            blue.setText(""+c.blue);
 
-        hex.setText(c.hex);
+            hex.setText(c.hex);
 
-        hue.setText(""+c.hue);
-        saturation.setText(""+c.saturation);
-        lightness.setText(""+c.lightness);
+            hue.setText(""+c.hue);
+            saturation.setText(""+c.saturation);
+            lightness.setText(""+c.lightness);
+        }
+        else{
+            red.setText("-");
+            green.setText("-");
+            blue.setText("-");
+
+            hex.setText("---");
+
+            hue.setText("-");
+            saturation.setText("-");
+            lightness.setText("-");
+        }
     }
 }

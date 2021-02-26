@@ -51,19 +51,18 @@ public class FruitNinja{
          e.printStackTrace();
       }
 
+      
       try{
-         icon = ImageIO.read(new File("lib/images/ColorMatrix.icns"));
-     }catch(Exception e) { }
-      //this is new since JDK 9
-      final Taskbar taskbar = Taskbar.getTaskbar();
-
-      try {
-         //set icon for mac os (and other systems which do support this method)
+         icon = ImageIO.read(new File("/Users/jackblair/Desktop/Code/Java/JavaChallenges/Color Selector/lib/images/ColorMatrix.icns"));
+         final Taskbar taskbar = Taskbar.getTaskbar();
          taskbar.setIconImage(icon);
-      } catch (final UnsupportedOperationException e) {
-         System.out.println("The os does not support: 'taskbar.setIconImage'");
+     } catch (final UnsupportedOperationException e) {
+      System.out.println("The os does not support: 'taskbar.setIconImage'");
       } catch (final SecurityException e) {
          System.out.println("There was a security exception for: 'taskbar.setIconImage'");
+      }
+      catch(Exception e) { 
+         System.out.println(e);
       }
 
       JFrame frame = new JFrame("Color Matrix Generator");

@@ -1,8 +1,6 @@
-import javax.imageio.ImageIO;
-import java.util.*;
 import javax.swing.*; //For Panel
+
 import java.awt.*; //For graphics
-import java.io.*;
 import java.awt.image.BufferedImage;
 import java.awt.event.*;
 
@@ -11,21 +9,26 @@ public class NinjaPanel extends JPanel{
    private BufferedImage mImage;
 
    private ColorDisplay color;
-   private Header header;
-   // private Subbar sub;
+   private Sidebar bar;
 
    public NinjaPanel(){
 
       setLayout(new BorderLayout());
-      header = new Header();
-      //header.setPreferredSize(new Dimension(header.getWidth(), (int) (header.getHeight()*1.25)));
-      add(header, BorderLayout.NORTH);
+      
+      JPanel screen = new JPanel();
+      screen.setLayout(new BorderLayout());
 
       color = new ColorDisplay();
       color.addMouseListener(new Mouse());
       color.addKeyListener(new Key());
       color.setFocusable(true);
-      add(color, BorderLayout.CENTER);
+      color.requestFocus();
+      screen.add(color, BorderLayout.CENTER);
+
+      bar = new Sidebar(color);
+      //bar.setSize(200, bar.getHeight());
+      add(bar, BorderLayout.WEST);
+      add(screen, BorderLayout.CENTER);
    }
 
 
@@ -81,8 +84,7 @@ public class NinjaPanel extends JPanel{
    private void update(CustomColor c) {
       color.requestFocus();
       if(c != null){
-         header.update(c);
-         color.update(c);
+         color.update(c, null);
       }
       color.repaint();
    }

@@ -22,7 +22,7 @@ public class Sidebar extends JPanel{
         setPreferredSize(new Dimension(275, getHeight()));
         add(Box.createRigidArea(new Dimension(300, 150)));
         
-        JLabel image = new JLabel(new ImageIcon("../lib/images/ColorMatrix.icns"));
+        JLabel image = new JLabel(new ImageIcon("./lib/ColorMatrix.icns"));
         add(image);
 
         JLabel text = new JLabel("RGB Matrix Generator");
@@ -73,7 +73,7 @@ public class Sidebar extends JPanel{
           });
         add(dimension);
 
-        JButton save = new JButton("Save to Desktop");
+        JButton save = new JButton("Save Color Matrix");
         save.setBackground(new Color(10, 10, 10));
         save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {

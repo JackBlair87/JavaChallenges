@@ -4,7 +4,8 @@ import javax.swing.UIManager;
 import java.awt.Taskbar;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-//java -jar -Xdock:icon=/lib/images/ColorMatrix.png "Fruit Ninja".jar -NSRequiresAquaSystemAppearance False
+//java -jar ColorMatrixGenerator.jar
+//java -jar ColorMatrixGenerator.jar -NSRequiresAquaSystemAppearance False
 import java.io.File;
 
 public class MatrixGenerator{
@@ -47,7 +48,7 @@ public class MatrixGenerator{
       }
 
       try{
-         icon = ImageIO.read(new File("../lib/images/ColorMatrix.icns"));
+         icon = ImageIO.read(new File("./lib/ColorMatrix.icns"));
          final Taskbar taskbar = Taskbar.getTaskbar();
          taskbar.setIconImage(icon);
      } catch (final UnsupportedOperationException e) {

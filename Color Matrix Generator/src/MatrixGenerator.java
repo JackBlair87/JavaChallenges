@@ -1,22 +1,17 @@
 import javax.imageio.ImageIO;
 import javax.swing.JFrame; //For the JFrame
 import javax.swing.UIManager;
-
 import java.awt.Taskbar;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 //java -jar -Xdock:icon=/lib/images/ColorMatrix.png "Fruit Ninja".jar -NSRequiresAquaSystemAppearance False
 import java.io.File;
 
-public class FruitNinja{
-   private static NinjaPanel ninja;
+public class MatrixGenerator{
+   private static MatrixPanel screen;
    private static BufferedImage icon;
    
    public static void main(String[] args){
-      // ColorSelect num = new ColorSelect();
-      // num.generateHSL(82, 255, 0);
-      // num.generateHSL(151, 74, 58
-      // );
 
       UIManager.put( "control", new Color( 128, 128, 128) );
       UIManager.put( "info", new Color(128,128,128) );
@@ -51,9 +46,8 @@ public class FruitNinja{
          e.printStackTrace();
       }
 
-      
       try{
-         icon = ImageIO.read(new File("/Users/jackblair/Desktop/Code/Java/JavaChallenges/Color Selector/lib/images/ColorMatrix.icns"));
+         icon = ImageIO.read(new File("../lib/images/ColorMatrix.icns"));
          final Taskbar taskbar = Taskbar.getTaskbar();
          taskbar.setIconImage(icon);
      } catch (final UnsupportedOperationException e) {
@@ -69,8 +63,8 @@ public class FruitNinja{
       frame.setExtendedState(JFrame.MAXIMIZED_BOTH); //Full screen
       frame.setLocationRelativeTo(null);
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      ninja = new NinjaPanel();
-      frame.getContentPane().add(ninja);
+      screen = new MatrixPanel();
+      frame.getContentPane().add(screen);
       frame.setVisible(true);
    }
 }

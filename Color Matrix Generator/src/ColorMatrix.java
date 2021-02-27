@@ -12,7 +12,11 @@ public class ColorMatrix {
 
     public ColorMatrix(){
         matrix = new CustomColor[resolution][resolution];
-        randomInterplolation();
+        topLeft = new CustomColor(2, 42, 106);
+        topRight = new CustomColor(201, 33, 183);
+        bottomLeft = new CustomColor(228, 110, 33);
+        bottomRight = new CustomColor(200, 20, 20);
+        generateColors();
     }
     
     public void generateColors(){
@@ -37,13 +41,11 @@ public class ColorMatrix {
         generateColors();
     }
 
-    public void generateRandomColors(){
-        for(int x = 0; x < resolution; x++){
-            for(int y = 0; y < resolution; y++){
-                matrix[x][y] = new CustomColor();
-                matrix[x][y].makeRandom();
-            }
-        }
+    public void isolateColor(){
+        topRight = new CustomColor(255, 255, 255);
+        bottomLeft = new CustomColor(0, 0, 0);
+        bottomRight = new CustomColor(0, 0, 0);
+        generateColors();
     }
 
    //https://harmoniccode.blogspot.com/2011/04/bilinear-color-interpolation.html
@@ -93,29 +95,34 @@ public class ColorMatrix {
     }
 
 	public CustomColor colorAt(int x, int y) {
-        if(x < 0 || y < 0 || x >= resolution || y >= resolution){
+        if(x < 0 || y < 0 || x >= resolution || y >= resolution)
             return null;
-        }
 		return matrix[x][y];
 	}
 
     public void setResolution(String newValue){
         try{
             int num = Integer.parseInt(newValue);
-            if(num > 0 && num < 256){
+            if(num > 0 && num < 256)
                 resolution = num;
-            }
         }
         finally{ }
         matrix = new CustomColor[resolution][resolution];
         generateColors();
     }
 
-    public String generateID(){
-        return topLeft.hex + topRight.hex + bottomLeft.hex + bottomRight.hex;
+    public void setColor(CustomColor c, String position){
+        if(position == "tl")
+            topLeft = c;
+        else if(position == "tr")
+            topRight = c;
+        else if(position == "bl")
+            bottomLeft = c;
+        else if(position == "br")
+            bottomRight = c;
     }
 
-    public CustomColor[][] getMatrix(){
-        return matrix;
+    public String generateID(){
+        return topLeft.hex + topRight.hex + bottomLeft.hex + bottomRight.hex;
     }
 }

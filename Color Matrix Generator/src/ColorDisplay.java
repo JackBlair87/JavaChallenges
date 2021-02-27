@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.awt.*; //For graphics
 
 public class ColorDisplay extends JPanel{
-    private static final long serialVersionUID = 1L;
     private BufferedImage mImage;
     public ColorMatrix colors;
     private Header header;
@@ -57,29 +56,24 @@ public class ColorDisplay extends JPanel{
         if(xSelected > -1 && ySelected > -1 && xSelected < colors.resolution && ySelected < colors.resolution){
             Graphics2D g2 = (Graphics2D) g;
             float max = 4.0f;
-            if(colors.resolution > 10){
+            if(colors.resolution > 10)
                 max = 3.0f;
-            }
-            else if(colors.resolution > 50){
+            else if(colors.resolution > 50)
                 max = 2.0f;
-            }
-            else if(colors.resolution > 125){
+            else if(colors.resolution > 125)
                 max = 1.0f;
-            }
+
             g2.setStroke(new BasicStroke(max));
-            
             g.setColor(Color.WHITE);
             g.drawRect(xSelected*gapW + xOffset, ySelected*gapH + yOffset, gapW, gapH);
         }
     }
 
-    public CustomColor shift(int x, int y){
-        if(xSelected + x >= 0 && xSelected + x < colors.resolution){
-            xSelected += x;
-        }
-        if(ySelected + y >= 0 && ySelected + y < colors.resolution){
-            ySelected += y;
-        }
+    public CustomColor shift(int dx, int dy){
+        if(xSelected + dx >= 0 && xSelected + dx < colors.resolution)
+            xSelected += dx;
+        if(ySelected + dy >= 0 && ySelected + dy < colors.resolution)
+            ySelected += dy;
 
         return colors.colorAt(xSelected, ySelected);
     }
@@ -115,61 +109,57 @@ public class ColorDisplay extends JPanel{
                 }
             }
         }
+
         update(colors.colorAt(xSelected, ySelected), null);
         return colors.colorAt(xSelected, ySelected);
     }
 
     public void update(CustomColor c, String headerLabel){
         header.update(c, headerLabel);
+        repaint();
     }
 
-    public ColorMatrix setRandom(){
+    public void setRandom(){
         colors.randomInterplolation();
         update(colors.colorAt(xSelected, ySelected), "Random Matrix");
-        repaint();
-        return colors;
+    }
+
+    public void isolateColor(){
+        colors.isolateColor();
+        update(colors.colorAt(xSelected, ySelected), "Isolated Color Matrix");
     }
 
     public void setResolution(String newValue){
         colors.setResolution(newValue);
         update(colors.colorAt(xSelected, ySelected), null);
-        repaint();
-    }
-
-    public ColorMatrix getMatrix(){
-        return colors;
     }
 
     public void save(){
         xSelected = -1;
         ySelected = -1;
         update(colors.colorAt(xSelected, ySelected), null);
-        repaint();
 
         BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics g = image.getGraphics();
         paint(g);
-        String name = colors.generateID();
         try {
-            ImageIO.write(image, "png", new File("/Users/jackblair/Desktop/" + name + ".png"));
+            File homeDirectory = javax.swing.filechooser.FileSystemView.getFileSystemView().getHomeDirectory();
+            System.out.println("Saved to" + homeDirectory.getAbsolutePath());
+            ImageIO.write(image, "png", new File(homeDirectory.getAbsolutePath() + "/" + colors.generateID() + ".png"));
         } catch (IOException ex) {
             System.out.println(ex);
         }
     }
 
     public CustomColor getColor(String position){
-        if(position == "tl"){
-            return colors.colorAt(0, 0);
-        }
-        else if(position == "tr"){
-            return colors.colorAt(colors.resolution-1, 0);
-        }
-        else if(position == "bl"){
-            return colors.colorAt(0, colors.resolution-1);
-        }
-        else if(position == "br"){
-            return colors.colorAt(colors.resolution-1, colors.resolution-1);
-        }
+        if(position == "tl")
+            return colors.topLeft;
+        else if(position == "tr")
+            return colors.topRight;
+        else if(position == "bl")
+            return colors.bottomLeft;
+        else if(position == "br")
+            return colors.bottomRight;
         return null;
     }
 
@@ -177,19 +167,7 @@ public class ColorDisplay extends JPanel{
         try{
             int number = Integer.parseInt(value);
             if(number >= 0 && number < 256){
-                CustomColor c = null;
-                if(position == "tl"){
-                    c = colors.topLeft;
-                }
-                else if(position == "tr"){
-                    c = colors.topRight;
-                }
-                else if(position == "bl"){
-                    c = colors.bottomLeft;
-                }
-                else if(position == "br"){
-                    c = colors.bottomRight;
-                }
+                CustomColor c = getColor(position);
 
                 if(color == "Red"){
                     int green = c.green;
@@ -207,22 +185,9 @@ public class ColorDisplay extends JPanel{
                     c = new CustomColor(red, green, number);
                 }
 
-                if(position == "tl"){
-                    colors.topLeft = c;
-                }
-                else if(position == "tr"){
-                    colors.topRight = c;
-                }
-                else if(position == "bl"){
-                    colors.bottomLeft = c;
-                }
-                else if(position == "br"){
-                    colors.bottomRight = c;
-                }
-
+                colors.setColor(c, position);
                 colors.generateColors();
                 update(c, "Modified Matrix");
-                repaint();
                 return c;
             }
         }

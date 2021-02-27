@@ -1,18 +1,15 @@
 import javax.swing.*; //For Panel
-
 import java.awt.*; //For graphics
 import java.awt.image.BufferedImage;
 import java.awt.event.*;
 
-public class NinjaPanel extends JPanel{
-   private static final long serialVersionUID = -5595525441567848011L;
+public class MatrixPanel extends JPanel{
    private BufferedImage mImage;
 
    private ColorDisplay color;
    private Sidebar bar;
 
-   public NinjaPanel(){
-
+   public MatrixPanel(){
       setLayout(new BorderLayout());
       
       JPanel screen = new JPanel();
@@ -22,27 +19,22 @@ public class NinjaPanel extends JPanel{
       color.addMouseListener(new Mouse());
       color.addKeyListener(new Key());
       color.setFocusable(true);
-      color.requestFocus();
       screen.add(color, BorderLayout.CENTER);
 
       bar = new Sidebar(color);
-      //bar.setSize(200, bar.getHeight());
+      bar.update();
+      
       add(bar, BorderLayout.WEST);
       add(screen, BorderLayout.CENTER);
    }
 
-
    @Override
    public void paintComponent(Graphics g){ 
-      draw();
-      g.drawImage(mImage,0,0,getWidth(),getHeight(),null);
-   }
-
-   public void draw(){
       mImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);     
-      Graphics g = mImage.getGraphics();  
+      Graphics mg = mImage.getGraphics();  
 
-      g.fillRect(0, 0, getWidth(), getHeight());
+      mg.fillRect(0, 0, getWidth(), getHeight());
+      g.drawImage(mImage,0,0,getWidth(),getHeight(),null);
    }
 
    private class Mouse extends MouseAdapter

@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.awt.*; //For graphics
 
 public class Subheader extends JPanel{
-    private static final long serialVersionUID = -6812699994428865518L;
     private BufferedImage mImage;
 
     private JLabel red;
@@ -21,7 +20,8 @@ public class Subheader extends JPanel{
     private JLabel labelRGB;
     private JLabel labelHSL;
 
-    public Subheader() {
+    public Subheader(){
+
         labelRGB = new JLabel("RGB", JLabel.CENTER);
         labelRGB.setFont(new Font("Karla", Font.PLAIN, 12));
         labelRGB.setForeground(Color.GRAY);
@@ -75,18 +75,15 @@ public class Subheader extends JPanel{
         refresh(null);
     }
 
-     @Override
+    @Override
     public void paintComponent(Graphics g){ 
-        draw();
+        mImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics mg = mImage.getGraphics();  
+
+        mg.setColor(new Color(38, 39, 33));
+        mg.fillRect(0, 0, getWidth(), getHeight());
+
         g.drawImage(mImage,0,0,getWidth(),getHeight(),null);
-    }
-
-    public void draw(){
-        mImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);     
-        Graphics g = mImage.getGraphics();  
-
-        g.setColor(new Color(38, 39, 33));
-        g.fillRect(0, 0, getWidth(), getHeight());
     }
 
     public void refresh(CustomColor c){

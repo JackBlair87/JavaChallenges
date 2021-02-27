@@ -88,34 +88,30 @@ public class CustomColor {
         double cMin = Math.min(Math.min(newRed, newGreen), newBlue);
         double delta = cMax-cMin;
 
-        //Hue calculation:
-        
         double hue = 0;
         if(delta != 0){
-            if(cMax == newRed){
-                hue = 0.6 * (((newGreen-newBlue)/delta) % 6);
-            }
-            else if(cMax == newGreen){
+            if(cMax == newRed)
+                hue = 0.6 * (((newGreen-newBlue)/delta));
+            else if(cMax == newGreen)
                 hue = 0.6 * (((newBlue-newRed)/delta) + 2);
-            }
-            else{
+            else
                 hue = 0.6 * (((newRed-newGreen)/delta) + 4);
-            }
         }
 
+        if(hue < 0)
+            hue += 3.6;
 
         //Lightness calculation:
         double lightness = (cMax + cMin) / 2.0;
 
         //Saturation calculation:
         double saturation = 0;
-        if(delta != 0){
+        if(delta != 0)
             saturation = delta / (1 - Math.abs(2 * lightness -1));
-        }
 
         this.hue = (int) Math.round(hue * 100);
-        this.saturation = (int) (saturation * 100);
-        this.lightness = (int) (lightness * 100);
+        this.saturation = (int) Math.round(saturation * 100);
+        this.lightness = (int) Math.round(lightness * 100);
     }
 
     public Color toColor(){

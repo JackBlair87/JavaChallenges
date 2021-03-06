@@ -59,7 +59,7 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>COMMAND_STRING</key>
-					<string>cd /Users/jackblair/Desktop/Code/Java/JavaChallenges/Color\ Matrix\ Generator
+					<string>cd /Users/jackblair/Desktop/Code/Java/JavaChallenges/ColorMatrixGenerator
 java -jar ColorMatrixGenerator.jar -NSRequiresAquaSystemAppearance False
 </string>
 					<key>CheckedForUserDefaultShell</key>
@@ -171,8 +171,6 @@ java -jar ColorMatrixGenerator.jar -NSRequiresAquaSystemAppearance False
 						<string>4</string>
 					</dict>
 				</dict>
-				<key>conversionLabel</key>
-				<integer>0</integer>
 				<key>isViewVisible</key>
 				<integer>1</integer>
 				<key>location</key>

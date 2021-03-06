@@ -1,3 +1,9 @@
+/*
+Jack Blair 2/2/21
+MIT Lisence by BruhLab
+Java Development Resources - Quaratine CompSci
+*/
+
 public class President{
     public int startTerm = 0;
     public int endTerm = 0;
@@ -22,12 +28,10 @@ public class President{
         name = data[1];
         firstLady = data[2];
 
-        if(data[3] == "office vacant"){
+        if(data[3] == "office vacant")
             vicePresident = "";
-        }
-        else{
+        else
             vicePresident = data[3];
-        }
     }
 
     public President(int startYear, int endYear, String nombre, String firstlady, String vice){

@@ -9,33 +9,19 @@ import java.util.ArrayList;
 public class VotingTable{
 
    public static void main(String[] args) {
-      ArrayList<Player> players = generatePlayers("Red", "Blue");
-      int[] votes = new int[11]; //One extra slot for "Skip Vote"
-   
-      for(Player p : players){
-         Player voted_out = p.randomVote(players);
-         if(voted_out == null){
-            votes[10] += 1;
-         }
-         else{
-            int index = players.indexOf(voted_out);
-            votes[index] += 1;
-         }
-      }
-      System.out.print(votes.toString());
-   
-      int max = 0;
-      int max_index = 0;
-      for(int x = 0; x < votes.length; x++){
-         if(votes[x] > max){
-            max = votes[x];
-            max_index = x;
-         }
-      }
-   
-      Player ejected = players.get(max_index);
-   
-      System.out.println("Ejected " + ejected.color());
+      String imposter1 = "Red";
+      String imposter2 = "Blue";
+
+      ArrayList<Player> players = null;
+
+      /*You must do a few things:
+         1. Generate a lobby of new players
+         2. Create an Array to tally votes
+         3. Loop through every player and call the randomVote() method 
+         4. Tally all the votes (accounting for a "skip" vote)
+         5. Find who has the most votes and eject them
+      */
+
    }
 
    public static ArrayList<Player> generatePlayers(String imposter1, String imposter2){

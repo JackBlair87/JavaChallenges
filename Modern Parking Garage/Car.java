@@ -1,3 +1,9 @@
+/*
+Jack Blair 2/2/21
+MIT Lisence by BruhLab
+Java Development Resources - Quaratine CompSci
+*/
+
 public class Car{
 
     private String brand;

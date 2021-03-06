@@ -1,3 +1,9 @@
+/*
+Jack Blair 2/2/21
+MIT Lisence by BruhLab
+Java Development Resources - Quaratine CompSci
+*/
+
 import java.util.*;
 import java.io.File;  // Import the File class
 import java.util.Scanner; // Import the Scanner class to read text files
@@ -7,7 +13,7 @@ public class PresidentSearcher {
       ArrayList<President> presidents = readData("./presidents.txt");
       System.out.println(whoWasPresIn(1956, presidents).toString());
       System.out.println(whoWasPresFor("Charles G. Dawes", presidents).toString());
-      // display(presidents);
+      //display(presidents);
    }
 
    public static ArrayList<President> readData(String filename){
@@ -48,8 +54,7 @@ public class PresidentSearcher {
  }
 
    public static void display(ArrayList<President> pres){
-      for(President p : pres){
+      for(President p : pres)
          System.out.println(p.toString());
-      }
    }
 }
